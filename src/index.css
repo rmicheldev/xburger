@@ -11,3 +11,24 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.text-inf-dir {
+  position: relative;
+  bottom: 3em;
+  left: 1em;
+  color: #fff;
+  font-weight: 800;
+  font-size: 1.4em;
+}
+
+.img-fw {
+  position: absolute;
+  width: 100vw;
+}
+
+.header-fw {
+  position: relative;
+  width: 100vw;
+  height: 300px;
+  overflow: hidden;
+}
