@@ -3,43 +3,50 @@ import api from "./../services/api";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {ReactComponent as Logo} from './../assets/logo.svg';
+import { useParams } from "react-router-dom";
 
 const Restaurantes = () => {
+    const [alert, setAlert] = useState(true);
     const [userData, setUserData] = useState([]);
     const [pages, setPages] = useState([]);
+    const { page } = useParams();
     useEffect(() => {
-      api
-        .get("/api/v1/restaurants?page=1&limit=10")
-        .then((response) => {
-          setUserData(response.data.data);
+      let sPage = page;
+      console.log("PAGE", sPage);
+      if(sPage == undefined){
+        sPage = 1;
+      }
+      console.log(alert);
+      if(alert) {
+        api
+          .get("/api/v1/restaurants?page="+sPage+"&limit=10")
+          .then((response) => {
+            setUserData(response.data.data);
 
-          let numPages = response.data.pagination;
-          let totalPaginas = (numPages.total/ numPages.per_page);
-          let paginacao = [];
-          for(let i=1; i<= totalPaginas; i++){
-            paginacao.push(i);
-          }
-          setPages(paginacao);
-        })
-        .catch((err) => {
-          console.error("ops! ocorreu um erro" + err);
-        });
-    }, []);
+            let numPages = response.data.pagination;
+            let totalPaginas = (numPages.total/ numPages.per_page);
+            let paginacao = [];
+            for(let i=1; i<= totalPaginas; i++){
+              paginacao.push(i);
+            }
+            setPages(paginacao);
+          })
+          .catch((err) => {
+            console.error("ops! ocorreu um erro" + err);
+          });
+          setAlert(false);
+        }
+    }, [alert]);
 
     let pagination = pages.map( (item,index)=>{
-      return <li class="page-item"><a class="page-link" href="#">{item}</a></li>
+      return <li class="page-item"><a onClick={ (ev) => { console.log(item); window.open("/"+item)}} class="page-link" href="#">{item}</a></li>
     });
-    //   return <div key={index}>
-    //       
-    //     </div>
-    // });
-
     
     let itemList = userData.map((item,index)=>{
       return <div key={index} class="col">
         <Link to={"restaurante/"+item.id} style={{textDecoration: 'none'} }>
           <div class="p-3 border bg-light">
-            <img src={item.image} class="img-fluid" alt="fundo"/>
+            <img src={item.image} class="img-fluid" alt="fundo" style={{ filter: 'brightness(35%)' }}/>
             <div class="text-inf-dir">{item.name}</div>
           </div>
         </Link>

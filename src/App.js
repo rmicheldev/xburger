@@ -11,6 +11,9 @@ function App() {
           <Route path="/restaurante/:idrestaurante">
             <RestauranteDetalhe />
           </Route>
+          <Route path="/:page">
+            <Restaurantes />
+          </Route>
           <Route path="/">
             <Restaurantes />
           </Route>
