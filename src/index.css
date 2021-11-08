@@ -14,11 +14,12 @@ code {
 
 .text-inf-dir {
   position: relative;
-  bottom: 3em;
+  bottom: 2em;
   left: 1em;
   color: #fff;
   font-weight: 800;
   font-size: 1.4em;
+  text-align: left;
 }
 
 .img-fw {
